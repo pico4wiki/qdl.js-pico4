@@ -1,6 +1,6 @@
 {
-  "name": "@commaai/qdl",
-  "version": "0.1.0",
+  "name": "@pico4wiki/qdl",
+  "version": "0.0.1",
   "license": "MIT",
   "type": "module",
   "main": "dist/qdl.js",
