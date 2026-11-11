@@ -1,6 +1,15 @@
 /** @enum {number} */
 export const LogLevel = { SILENT: 0, ERROR: 1, WARN: 2, INFO: 3, DEBUG: 4 };
 
+/** @typedef {{ debug(...v: any[]): void; info(...v: any[]): void; warn(...v: any[]): void; error(...v: any[]): void }} ConsoleLike */
+
+/** @type {ConsoleLike} */
+export let consoleObject = console;
+/** @param {ConsoleLike} obj */
+export function setConsoleObject(obj) {
+  consoleObject = obj;
+}
+
 /**
  * Configurable logger with different log levels and device message deduplication.
  * Features: log levels, auto-deduplication, debouncing for repeated messages.
@@ -25,10 +34,10 @@ export class Logger {
     this.prefix ? method(this.prefix, ...args) : method(...args);
   }
 
-  debug(...args) { this.#log(console.debug, LogLevel.DEBUG, args); }
-  info(...args) { this.#log(console.info, LogLevel.INFO, args); }
-  warn(...args) { this.#log(console.warn, LogLevel.WARN, args); }
-  error(...args) { this.#log(console.error, LogLevel.ERROR, args); }
+  debug(...args) { this.#log(consoleObject.debug, LogLevel.DEBUG, args); }
+  info(...args) { this.#log(consoleObject.info, LogLevel.INFO, args); }
+  warn(...args) { this.#log(consoleObject.warn, LogLevel.WARN, args); }
+  error(...args) { this.#log(consoleObject.error, LogLevel.ERROR, args); }
 
   /**
    * Process and potentially display a device message
