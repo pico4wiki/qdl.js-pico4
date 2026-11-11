@@ -1,4 +1,5 @@
-import { buf as crc32 } from "crc-32"
+import CRC32 from "crc-32"
+const { buf: crc32 } = CRC32;
 import { bytes, int32, string, struct, uint32, uint64 } from "@incognitojam/tiny-struct";
 
 import { createLogger } from "./logger.js";
