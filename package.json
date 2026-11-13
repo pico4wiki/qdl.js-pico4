@@ -25,17 +25,12 @@
   },
   "scripts": {
     "build": "tsc",
-    "postinstall": "bun run build",
+    "prepare": "npm run build",
     "lint": "biome lint"
   },
   "bin": {
     "simg2img.js": "src/bin/simg2img.js",
     "qdl.js": "src/bin/qdl.js"
-  },
-  "//devDependencies": {
-    "@biomejs/biome": "code linter and formatter",
-    "@happy-dom/global-registrator": "happy-dom is used by tests involving browser APIs, like DOMParser",
-    "@types/w3c-web-usb": "type information for the WebUSB APIs"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -44,22 +39,12 @@
     "@types/w3c-web-usb": "^1.0.10",
     "xz-decompress": "^0.2.2"
   },
-  "//dependencies": {
-    "@incognitojam/tiny-struct": "parse binary structs",
-    "arg": "argument parsing for CLI",
-    "crc-32": "crc32s are used in the gpt header calculations",
-    "fast-xml-parser": "parse XML to JS object, fast, works in browser and node",
-    "usb": "node.js lib for communicating with USB devices, has WebUSB compatible API"
-  },
   "dependencies": {
     "@incognitojam/tiny-struct": "^0.1.3",
     "arg": "^5.0.2",
     "crc-32": "^1.2.2",
     "fast-xml-parser": "^5.0.8",
     "usb": "^2.15.0"
-  },
-  "//peerDependencies": {
-    "typescript": "does type checking, generates JS bundles and type declarations for language servers"
   },
   "peerDependencies": {
     "typescript": "^5.7.3"
