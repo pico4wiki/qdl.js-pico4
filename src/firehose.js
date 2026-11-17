@@ -67,7 +67,7 @@ export class Firehose {
     // FIXME: warn if command is shortened
     const dataToSend = new TextEncoder().encode(command).slice(0, this.cfg.MaxXMLSizeInBytes);
     try {
-      await runWithTimeout(this.cdc.write(dataToSend, wait), 1000);
+      await runWithTimeout(this.cdc.write(dataToSend, wait), 5000);
     } catch (e) {
       throw "Firehose - Timed out while sending command";
     }
@@ -165,7 +165,7 @@ export class Firehose {
 
     let buffer;
     try {
-      buffer = await runWithTimeout(this.cdc.read(this.cfg.SECTOR_SIZE_IN_BYTES * numPartitionSectors), 2000);
+      buffer = await runWithTimeout(this.cdc.read(this.cfg.SECTOR_SIZE_IN_BYTES * numPartitionSectors), 10_000);
     } catch {
       throw new Error("Failed to read buffer: timed out");
     }
@@ -190,7 +190,7 @@ export class Firehose {
     let tmp = new Uint8Array();
     let timeout = 0;
     while (!containsBytes("<response", tmp)) {
-      const res = await runWithTimeout(this.cdc.read(), 1000).catch(() => new Uint8Array());
+      const res = await runWithTimeout(this.cdc.read(), 3000).catch(() => new Uint8Array());
       if (compareStringToBytes("", res)) {
         timeout += 1;
         if (timeout > retries) break;
