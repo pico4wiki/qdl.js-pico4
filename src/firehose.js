@@ -142,9 +142,10 @@ export class Firehose {
    * @param {number} physicalPartitionNumber
    * @param {bigint} startSector
    * @param {number} numPartitionSectors
+   * @param {number} [readTimeout=10000]
    * @returns {Promise<Uint8Array>}
    */
-  async cmdReadBuffer(physicalPartitionNumber, startSector, numPartitionSectors) {
+  async cmdReadBuffer(physicalPartitionNumber, startSector, numPartitionSectors, readTimeout = 10_000) {
     await this.cdc.write(new TextEncoder().encode(toXml("read", {
       SECTOR_SIZE_IN_BYTES: this.cfg.SECTOR_SIZE_IN_BYTES,
       num_partition_sectors: numPartitionSectors,
@@ -165,7 +166,7 @@ export class Firehose {
 
     let buffer;
     try {
-      buffer = await runWithTimeout(this.cdc.read(this.cfg.SECTOR_SIZE_IN_BYTES * numPartitionSectors), 10_000);
+      buffer = await runWithTimeout(this.cdc.read(this.cfg.SECTOR_SIZE_IN_BYTES * numPartitionSectors), readTimeout);
     } catch {
       throw new Error("Failed to read buffer: timed out");
     }

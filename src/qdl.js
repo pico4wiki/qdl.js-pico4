@@ -252,9 +252,10 @@ export class qdlDevice {
    * @param {Blob} blob
    * @param {progressCallback} [onProgress] - Returns number of bytes written
    * @param {boolean} [eraseBeforeFlashSparse=true]
+   * @param {number} [readTimeout=10000]
    * @returns {Promise<boolean>}
    */
-  async flashBlob(name, blob, onProgress = undefined, eraseBeforeFlashSparse = true) {
+  async flashBlob(name, blob, onProgress = undefined, eraseBeforeFlashSparse = true, readTimeout = 10_000) {
     const [found, lun, partition, gpt] = await this.detectPartition(name);
     if (!found) throw `Can't find partition ${name}`;
     logger.info(`Flashing ${name}`);
@@ -265,7 +266,7 @@ export class qdlDevice {
         logger.error("Image too large for partition", { imgSectors, partitionSectors: partition.sectors });
         return false;
       }
-      return await this.firehose.cmdProgram(lun, partition.start, blob, onProgress);
+      return await this.firehose.cmdProgram(lun, partition.start, blob, onProgress, readTimeout);
     }
     if (eraseBeforeFlashSparse) {
       logger.debug(`Erasing ${name}...`);
