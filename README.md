@@ -1,4 +1,13 @@
-# qdl.js
+# qdl.js pico4.wiki fork
+
+This fork of qdl.js is intended for use on pico4.wiki, for talking to PICO 4 headsets.
+
+This includes a patchwork of miscellaneous changes including more lax timeouts,
+exposing more library internals, and a smaller write chunk size.
+
+This is not intended to ever reach upstream but some of these tweaks may be useful to you.
+
+# Original README
 
 ## Development
 
